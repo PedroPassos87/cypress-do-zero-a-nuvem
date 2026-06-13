@@ -94,8 +94,15 @@
     });
 
     it.only('envia o formulario com sucesso usando um comando personalizado', () => {
-  
-      cy.fillMandatoryFieldsAndSubmit()
+      const data = {
+        firstName: 'Pedro',
+        lastName: 'Souza',
+        email: 'email@teste.com',
+        phone: '1234567890',
+        text:'TESTETESTETESTETESTETESTETESTETESTETESTETESTE.'
+      }
+
+      cy.fillMandatoryFieldsAndSubmit(data)
 
       cy.get('.success')
         .should('be.visible')
