@@ -92,5 +92,13 @@
       .should('be.visible')
       .and('contain', 'Valide os campos obrigatórios!')
     });
+
+    it.only('envia o formulario com sucesso usando um comando personalizado', () => {
+  
+      cy.fillMandatoryFieldsAndSubmit()
+
+      cy.get('.success')
+        .should('be.visible')
+    });
   })
 
