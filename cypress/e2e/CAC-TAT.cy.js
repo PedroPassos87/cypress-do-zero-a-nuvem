@@ -93,7 +93,7 @@
       .and('contain', 'Valide os campos obrigatórios!')
     });
 
-    it.only('envia o formulario com sucesso usando um comando personalizado', () => {
+    it('envia o formulario com sucesso usando um comando personalizado', () => {
       const data = {
         firstName: 'Pedro',
         lastName: 'Souza',
@@ -107,5 +107,39 @@
       cy.get('.success')
         .should('be.visible')
     });
+
+    it('identifica o botao usando contains, preenche os campos obrigatórios e envia o formulário', () => {
+      cy.get('#firstName').type('Nometeste');
+      cy.get('#lastName').type('SobreNometeste');
+      cy.get('#email').type('emailteste@exemplo.com');
+      cy.get('#phone').type('123456789');
+
+      cy.get('#open-text-area').type(LONG_TEXT, { delay: 0 })
+
+      cy.contains('button','Enviar').click()
+    
+      cy.get('.success')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+    });
+
+    it('seleciona o produto Youtube', () => {
+      cy.get('#product')
+        .select('YouTube')
+        .should('have.value','youtube')
+    });
+    
+    it('seleciona um produto (Mentoria) por seu valor (value)', () => {
+      cy.get('#product')
+        .select('mentoria')
+        .should('have.value','mentoria')
+    });
+    
+    it.only('seleciona um produto (Blog) por seu índice', () => {
+      cy.get('#product')
+        .select(1)
+        .should('have.value','blog')
+    });
+    
   })
 
