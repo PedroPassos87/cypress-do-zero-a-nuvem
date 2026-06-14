@@ -196,7 +196,7 @@
         .and('have.attr', 'href', 'privacy.html')
     });
     
-    it.only('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
+    it('acessa a página da política de privacidade removendo o target e então clicando no link', () => {
       cy.contains('a', 'Política de Privacidade')
         .invoke('removeAttr', 'target')
         .click()
