@@ -49,7 +49,7 @@
       cy.get('#lastName').type('SobreNometeste');
       cy.get('#email').type('emailsemformatacaoteste').blur();
       cy.get('#phone').type('123456789');
-
+      cy.get('#phone-checkbox').check()
       cy.get('#open-text-area').type(LONG_TEXT, { delay: 0 })
 
       cy.get('button[type="submit"]').click()
@@ -135,10 +135,41 @@
         .should('have.value','mentoria')
     });
     
-    it.only('seleciona um produto (Blog) por seu índice', () => {
+    it('seleciona um produto (Blog) por seu índice', () => {
       cy.get('#product')
         .select(1)
         .should('have.value','blog')
+    });
+    
+    it('marca o tipo de atendimento "Feedback"', () => {
+      cy.get('input[type="radio"][value="feedback"]').check().should('be.checked')
+    });
+    
+    it('marca cada tipo de atendimento', () => {
+      cy.get('input[type="radio"]')
+        .each(typeOfService => {
+          cy.wrap(typeOfService)
+            .check()
+            .should('be.checked')
+      })
+    });
+
+    it('marca ambos checkboxes, e depois desmarca o ultimo', () => {
+      cy.get('input[type="checkbox"]')
+        .check()
+        .should('be.checked')
+        .last()
+        .uncheck()
+        .should('not.be.checked')
+
+    });
+
+    it.only('seleciona um arquivo da pasta fixtures', () => {
+      cy.get('#file-upload')
+        .selectFile('cypress/fixtures/example.json')
+        .should(input => {
+          expect(input[0].files[0].name).to.equal('example.json')
+        })
     });
     
   })
