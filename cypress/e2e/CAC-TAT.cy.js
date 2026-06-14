@@ -201,7 +201,7 @@
         .invoke('removeAttr', 'target')
         .click()
       
-      cy.contains('h1','CA TAT - Política de Privacidade')
+      cy.contains('h1','CAC TAT - Política de Privacidade')
         .should('be.visible')
     });
     
