@@ -1,10 +1,35 @@
 name: End-to-end tests
 on: push
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
 jobs:
   cypress-run:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Cypress run
         uses: cypress-io/github-action@v6   
+
+      - name: Upload Test Evidences (On Failure)
+        uses: actions/upload-artifact@v4
+        if: failure() # Só roda se o "Cypress run" falhar
+        with:
+          name: cypress-error-screenshots-and-videos
+          path: |
+            cypress/screenshots
+            cypress/videos
+          retention-days: 7
+
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-execution-report
+          path: cypress/reports
+          retention-days: 14
