@@ -248,7 +248,7 @@
       .should('not.be.visible')
 });
 
-  it.only('faz uma requisição HTTP', () => {
+  it('faz uma requisição HTTP', () => {
     cy.request('https://cac-tat-v3.s3.eu-central-1.amazonaws.com/index.html')
       .as('getRequest')
       .its('status')
@@ -260,6 +260,12 @@
       .its('body')
       .should('be.include','CAC TAT')
     
+  });
+
+  it.only('achando o GATO', () => {
+    cy.get('#cat')
+      .invoke('show')
+      .should('be.visible')
   });
     
     
