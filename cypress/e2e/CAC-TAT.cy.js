@@ -262,7 +262,7 @@
     
   });
 
-  it.only('achando o GATO', () => {
+  it('achando o GATO', () => {
     cy.get('#cat')
       .invoke('show')
       .should('be.visible')
