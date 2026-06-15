@@ -9,6 +9,9 @@
     })
 
     it('preenche os campos obrigatórios e envia o formulário', () => {
+
+      cy.clock()
+
       cy.get('#firstName').type('Nometeste');
       cy.get('#lastName').type('SobreNometeste');
       cy.get('#email').type('emailteste@exemplo.com');
@@ -21,9 +24,18 @@
       cy.get('.success')
       .should('be.visible')
       .and('contain', 'Mensagem enviada com sucesso.')
+
+      cy.tick(3000)
+
+      cy.get('.success')
+      .should('not.be.visible')
+
     });
 
     it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', () => {
+
+      cy.clock()
+
       cy.get('#firstName').type('Nometeste');
       cy.get('#lastName').type('SobreNometeste');
       cy.get('#email').type('emailsemformatacaoteste').blur();
@@ -36,6 +48,11 @@
       cy.get('.error')
       .should('be.visible')
       .and('contain', 'Valide os campos obrigatórios!')
+
+      cy.tick(3000)
+
+      cy.get('.error')
+      .should('not.be.visible')
     });
 
     it('campo telefone permanece vazio quando preenchido com um valor não-numérico', () => {
@@ -45,6 +62,9 @@
     });
 
     it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', () => {
+      
+      cy.clock()
+      
       cy.get('#firstName').type('Nometeste');
       cy.get('#lastName').type('SobreNometeste');
       cy.get('#email').type('emailsemformatacaoteste').blur();
@@ -57,6 +77,11 @@
       cy.get('.error')
       .should('be.visible')
       .and('contain', 'Valide os campos obrigatórios!')
+
+      cy.tick(3000)
+
+      cy.get('.error')
+      .should('not.be.visible')
     });
 
     it('preenche e limpa os campos nome, sobrenome, email e telefone', () => {
